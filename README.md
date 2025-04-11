@@ -5,6 +5,8 @@
 
 ## Запуск
 
-Запустите эту команду в bash/shell из директории проекта: <br>
-`python manage.py runserver`
-А потом перейдите по ссылке http://127.0.0.1:8000/
+Запустите эти команду в bash/shell из директории проекта: <br>
+`python manage.py makemigrations`<br>
+`python manage.py migrate `<br>
+`python manage.py runserver`<br>
+Когда проект успешно запустится, перейдите по ссылке http://127.0.0.1:8000/
