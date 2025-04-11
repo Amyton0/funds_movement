@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% include "navigation.html"  %}
+    <title>Главная</title>
+</head>
+<body>
+    <h2>Главная страница</h2>
+    <form method="POST">
+        {% csrf_token %}
+            {{ form }}
+    <input type="submit" value="Применить фильтр" >
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Статус</th>
+                <th>Тип</th>
+                <th>Категория</th>
+                <th>Подкатегория</th>
+                <th>Сумма</th>
+                <th>Комментарий</th>
+                <th>Редактировать/Удалить</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{record.date}}</td>
+                <td>{{record.status}}</td>
+                <td>{{record.record_type}}</td>
+                <td>{{record.category}}</td>
+                <td>{{record.subcategory}}</td>
+                <td>{{record.summ}}</td>
+                <td>{{record.comment}}</td>
+                <td><a href="/edit/record/{{ record.id }}">✎</a> <a href="/delete/record/{{ record.id }}">x</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

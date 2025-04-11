@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% include "navigation.html"  %}
+    <title>Запись</title>
+</head>
+<body>
+    <h2>{{ header }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+    <table>
+        {{ form.as_p }}
+    </table>
+    <input type="submit" value="Готово" >
+    </form>
+
+    <script>
+        document.getElementById("id_type").addEventListener("change", function() {
+            const typeId = this.value;
+            const categorySelect = document.getElementById("id_category");
+            const subcategorySelect = document.getElementById("id_subcategory");
+
+            categorySelect.innerHTML = '';
+            subcategorySelect.innerHTML = '';
+            subcategorySelect.disabled = true;
+
+            if (typeId) {
+                fetch(`/ajax/load-categories/?type_id=${typeId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.id;
+                            option.text = item.name;
+                            categorySelect.appendChild(option);
+                        });
+                        categorySelect.disabled = false;
+
+                        if (data.length === 1) {
+                            categorySelect.value = data[0].id;
+                            const event = new Event('change');
+                            categorySelect.dispatchEvent(event);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+
+        document.getElementById("id_category").addEventListener("change", function() {
+            const categoryId = this.value;
+            const subcategorySelect = document.getElementById("id_subcategory");
+
+            subcategorySelect.innerHTML = '';
+            subcategorySelect.disabled = true;
+
+            if (categoryId) {
+                fetch(`/ajax/load-subcategories/?category_id=${categoryId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.id;
+                            option.text = item.name;
+                            subcategorySelect.appendChild(option);
+                        });
+                        subcategorySelect.disabled = false;
+
+                        if (data.length === 1) {
+                            subcategorySelect.value = data[0].id;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        subcategorySelect.disabled = false;
+                    });
+            } else {
+                subcategorySelect.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

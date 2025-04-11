@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% include "navigation.html"  %}
+    <title>Категории</title>
+</head>
+<body>
+    <h2>Управление справочниками</h2>
+    Статусы:<br>
+    {% for status in statuses %}
+        <li>{{ status.0 }} <a href="/edit/status/{{ status.1 }}">✎</a> <a href="/delete/status/{{ status.1 }}">x</a></li>
+    {% endfor %}
+    <a href="/add/status">+ Добавить статус</a><br><br>
+    <ul style="list-style-type: none; padding-left: 0;">
+        <li>Типы:</li>
+    {% for type, categories in folder_hierarchy.items %}
+        <li>
+            {{ type.0 }} <a href="/edit/type/{{ type.1 }}">✎</a> <a href="/delete/type/{{ type.1 }}">x</a>
+                <ul style="padding-left: 20px; list-style-type: none;">
+                    <li>Категории:</li>
+                    {% for category, subcategories in categories.items %}
+                        <li>
+                            {{ category.0 }} <a href="/edit/category/{{ category.1 }}">✎</a> <a href="/delete/category/{{ category.1 }}">x</a>
+                                <ul style="padding-left: 20px; list-style-type: none;">
+                                    <li>Подкатегории:</li>
+                                    {% for subcategory in subcategories %}
+                                        <li>
+                                            {{ subcategory.0 }} <a href="/edit/subcategory/{{ subcategory.1 }}">✎</a> <a href="/delete/subcategory/{{ subcategory.1 }}">x</a>
+                                        </li>
+                                    {% endfor %}
+                                    <li><a href="/add/subcategory/{{ category.1 }}">+ Добавить подкатегорию</a></li>
+                                </ul>
+                        </li>
+                    {% endfor %}
+                    <li><a href="/add/category/{{ type.1 }}">+ Добавить категорию</a></li>
+                </ul>
+        </li>
+    {% endfor %}
+    <li><a href="/add/type">+ Добавить тип</a></li>
+</ul>
+</body>
+</html>

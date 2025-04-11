@@ -16,7 +16,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from funds import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.main_page),
+    path('create', views.create),
+    path('directories', views.directories),
+    path('index', views.index),
+    path('add/status', views.create_status),
+    path('add/type', views.create_type),
+    path('add/category/<int:type_id>', views.create_category),
+    path('add/subcategory/<int:category_id>', views.create_subcategory),
+    path('delete/status/<int:status_id>', views.delete_status),
+    path('delete/type/<int:type_id>', views.delete_type),
+    path('delete/category/<int:category_id>', views.delete_category),
+    path('delete/subcategory/<int:subcategory_id>', views.delete_subcategory),
+    path('delete/record/<int:record_id>', views.delete_record),
+    path('edit/status/<int:status_id>', views.edit_status),
+    path('edit/type/<int:type_id>', views.edit_type),
+    path('edit/category/<int:category_id>', views.edit_category),
+    path('edit/subcategory/<int:subcategory_id>', views.edit_subcategory),
+    path('edit/record/<int:record_id>', views.edit_record),
+    path('ajax/load-subcategories/', views.load_subcategories, name='ajax_load_subcategories'),
+    path('ajax/load-categories/', views.load_categories, name='ajax_load_categories'),
 ]

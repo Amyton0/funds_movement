@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% include "navigation.html"  %}
+    <title>{{ type }}</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+    <table>
+        {{ form.as_p }}
+    </table>
+    <input type="submit" value="Готово" >
+    </form>
+</body>
+</html>
